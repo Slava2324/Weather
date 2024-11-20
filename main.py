@@ -1,4 +1,5 @@
 from requests import get
+from urllib.parse import urljoin
 
 
 parameters = {
