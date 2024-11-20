@@ -1,7 +1,7 @@
 from requests import get
 
 
-get_parameters = {
+parameters = {
 	"m": "",
 	"n": "",
 	"q": "",
@@ -12,6 +12,6 @@ get_parameters = {
 
 request_template = "https://wttr.in/{0}"
 for place in ["Лондон", "svo", "Череповец"]:
-	request = get(request_template.format(place), params=get_parameters)
+	request = get(request_template.format(place), params=parameters)
 	request.raise_for_status()
 	print(request.text)
