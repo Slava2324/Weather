@@ -2,17 +2,14 @@ from requests import get
 from urllib.parse import urljoin
 
 
-parameters = {
-	"m": "",
-	"n": "",
-	"q": "",
-	"T": "",
+params = {
+	"mnqT": "",
 	"lang": "ru",
 }
 
-
-request_template = "https://wttr.in/{0}"
 for place in ["Лондон", "svo", "Череповец"]:
-	request = get(urljoin(request_template.format(place), params=parameters))
-	request.raise_for_status()
-	print(request.text)
+    url = f"https://wttr.in/{place}"	
+    response = get(url, params=params)
+    response.raise_for_status()
+    print(response.text)
+
