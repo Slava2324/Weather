@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 
-start_date = "2024-11-19"
-end_date = "2024-11-26"
 
 
 def get_coord_by_city(city_name):
@@ -28,7 +26,7 @@ def get_coord_by_city(city_name):
 		exit()
 
 
-def get_weather(longitude, latitude):
+def get_weather(longitude, latitude, start_date, end_date):
 	url_weather = "https://archive-api.open-meteo.com/v1/era5"
 	params_weather = {
 		"latitude": latitude,
@@ -70,9 +68,11 @@ def show_data(data, city):
 
 
 def main():
+	start_date = "2024-11-19"
+	end_date = "2024-11-26"
 	city_name = f'"{input("Введите город: ")}"'
 	longitude, latitude = get_coord_by_city(city_name)
-	time, temperature = get_weather(longitude, latitude)
+	time, temperature = get_weather(longitude, latitude, start_date, end_date)
 	data = create_dataframe(time, temperature)
 	show_data(data, city_name)
 
