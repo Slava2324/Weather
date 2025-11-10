@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 
-def get_coord_by_city(city_name):
-    url_coordinates = "https://data.opendatasoft.com/api/explo/v2.1/catalog/datasets/geonames-postal-code@public/records"
+def get_coord_by_city(city_name, country_code):
+    url_coordinates = "https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-postal-code@public/records"
     params_coordinates = {
         "limit": 1,
-        "where": city_name,
+        "where": f"place_name='{city_name}' and country_code='{country_code}'",
     }
 
     response_coordinates_api = requests.get(url_coordinates, params=params_coordinates)
@@ -19,10 +19,9 @@ def get_coord_by_city(city_name):
         longitude = coords['lon']
         latitude = coords['lat']
         return longitude, latitude
-    else:
-        print("""Город не найден! Проверьте правильность написания.
+    print("""Город не найден! Проверьте правильность написания.
 Если всё верно, значит города нет в базе данных.""")
-        exit()
+    exit()
 
 
 def get_weather(longitude, latitude, start_date, end_date):
@@ -68,8 +67,10 @@ def show_data(data, city):
 
 def main():
     start_date = input("Введите дату начала наблюдений, формат YYYY-MM-DD: ")
-    end_date = input("Введите дату конца наблюдений, формат тот же: ")   city_name = f'"{input("Введите город: ")}"'
-    longitude, latitude = get_coord_by_city(city_name)
+    end_date = input("Введите дату конца наблюдений, формат тот же: ")
+    city_name = input("Введите город: ")
+    country_code = input("Код страны: ")
+    longitude, latitude = get_coord_by_city(city_name, country_code)
     time, temperature = get_weather(longitude, latitude, start_date, end_date)
     data = create_dataframe(time, temperature)
     show_data(data, city_name)
